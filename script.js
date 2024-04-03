@@ -95,10 +95,7 @@ document.addEventListener("DOMContentLoaded", (event) => {
         const article=Object.fromEntries(formData.entries());
         const json=JSON.stringify(article);
         console.log(json);
-        //data.data.push(article);
-        //creation(data)
         feedblock.append(createBookElement(article))
-        ////
     })
 })
 
