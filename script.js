@@ -1,4 +1,5 @@
-// document.addEventListener("DOMContentLoaded", (event) => { })
+
+
 
 /* When the user clicks on the button,
 toggle between hiding and showing the dropdown content */
@@ -21,9 +22,9 @@ window.onclick = function (event) {
 }
 //fonction qui va permettre de charger le DOM une fois la récuperation et mise en place effectuée
 document.addEventListener("DOMContentLoaded", (event) => {
-    console.log("DOM fully loaded and parsed");
 //on declare la div parente pour le reste du code
     const feedblock = document.querySelector(".test");
+    const form =document.querySelector("form");
 
 //métode iitiale pour récupérer les données
 // let data = {}
@@ -35,20 +36,20 @@ document.addEventListener("DOMContentLoaded", (event) => {
 // logBooks()
 //     .then(resp => {
 //         console.log(resp.data);
-//         displaybook(resp.data);
+//         displaybooks(resp.data);
 //     })
-
-//méthode plus simple et élégante: on fait un fetch avec promesse on reformat les données en json puis après on format les données en json et on utilise les données pour displaybook
-    fetch("https://fakerapi.it/api/v1/books?_quantity=5").then(resp => {
-        return resp.json();
-    }).then(json => {
-            console.log(json);
-            displaybook(json.data);
+// //méthode plus simple et élégante: on fait un fetch avec promesse on reformat les données en json puis après on format les données en json et on utilise les données pour displaybooks
+    fetch("https://fakerapi.it/api/v1/books?_quantity=5")
+        .then(resp => resp.json())
+        .then(json => {
+            displaybooks(json.data);
+            console.log(json.data);
         }
     )
+
 //p^rend un tableau d'objet le map avec une fonction create book (voir plus loin) puis retourne le nouveau tableau d'aobjet à la variable feedblock
-    const displaybook = (books) => {
-        console.log(books)
+    const displaybooks = (books) => {
+        //console.log(books)
         const booksNode = books.map((book, index) => {
             return createBookElement(book, index);
         });
@@ -56,6 +57,7 @@ document.addEventListener("DOMContentLoaded", (event) => {
     };
 //fonction qui utilise les données json pour creer des éléments html
     const createBookElement = (book, index) => {
+        console.log("test")
         const div = document.createElement("div");
         div.classList.add('feed')
         div.id = "feed#"
@@ -63,9 +65,9 @@ document.addEventListener("DOMContentLoaded", (event) => {
             <div class="upperfeed" id="uppperfeed#">
                 <div class="ul1">
                     <ul>
-                        <li><span class="${book.id}"></span> <p>${book.title}</p></li>
-                        <li><span class="${book.id}"></span> <p>${book.author}</p></li>
-                        <li><span class="${book.id}"></span> <p>${book.publisher}</p></li>
+                        <li><span class="${book.id}"></span> <p>Titre: ${book.title}</p></li>
+                        <li><span class="${book.id}"></span> <p>Auteur: ${book.author}</p></li>
+                        <li><span class="${book.id}"></span> <p>Editeur: ${book.publisher}</p></li>
                     </ul>
                 </div>
                 <div class="ul2">
@@ -87,4 +89,17 @@ document.addEventListener("DOMContentLoaded", (event) => {
          `;
         return div;
     };
+    form.addEventListener("submit", async event=>{
+        event.preventDefault();
+        const formData= new FormData(form);
+        const article=Object.fromEntries(formData.entries());
+        const json=JSON.stringify(article);
+        console.log(json);
+        //data.data.push(article);
+        //creation(data)
+        feedblock.append(createBookElement(article))
+        ////
+    })
 })
+
+
