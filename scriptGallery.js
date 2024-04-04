@@ -2,8 +2,8 @@ document.addEventListener("DOMContentLoaded", (event) => {
 
     const imgblocks = document.getElementById("container");
     const toggleImg =document.getElementById("switch");
-    let mosaicBoolean=document.getElementById("switch").value;
-    console.log(toggleImg);
+    let mosaicBoolean=document.getElementById("switch").value==="true"? true:false;
+    console.log(mosaicBoolean);
 
     const imgFetch = fetch('https://picsum.photos/v2/list')
         .then(resp => resp.json())
@@ -44,7 +44,8 @@ document.addEventListener("DOMContentLoaded", (event) => {
     }
 
     toggleImg.onclick=()=>{
-        event.preventDefault();
+        // event.preventDefault();
+        console.log(typeof mosaicBoolean);
         if (mosaicBoolean===true){
             displayToColumn();
             console.log('mos',mosaicBoolean);
@@ -54,6 +55,7 @@ document.addEventListener("DOMContentLoaded", (event) => {
             displayToMosaic();
             console.log('col',mosaicBoolean);
         }
+        console.log('booleanSortie=',mosaicBoolean);
     }
 
     // displayToMosaic();
