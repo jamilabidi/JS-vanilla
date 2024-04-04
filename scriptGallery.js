@@ -23,15 +23,29 @@ const displayImgs= (arrayObjects)=>{
 
 const createImgElement= (img)=>{
     const div=document.createElement("div")
+    div.classList.add('feed')
+    div.classList.add('imgSolo')
     div.innerHTML=`
-    <div>
+    <div >
     <img src="${img.download_url}" style="max-width: 25rem"/>
     </div>
     `
     return div;
 }
 
+const displayToColumn=()=> {
+    imgblocks.classList.remove('imgContainer');
+    imgblocks.classList.add('imgColumn');
+
+}
+const displayToMosaic=()=> {
+    imgblocks.classList.remove('imgColumn');
+    imgblocks.classList.add('imgContainer');
+
+}
 
 
+
+displayToMosaic();
 
 })

@@ -197,4 +197,21 @@ h1 {
 /*input { padding: 8px 15px; outline: 0; border: 1px solid #ddd; border-radius: 3px; }*/
 /*form input { flex: 1; margin-right: 15px; }
  */
-
+.imgContainer{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 2rem;
+}
+.imgSolo{
+    padding: 2rem;
+    margin:2rem;
+}
+.imgColumn {
+    display:flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 2rem;
+    flex: max-content;
+}
