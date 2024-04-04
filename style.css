@@ -71,8 +71,8 @@ h1 {
 
 .feed {
     box-sizing: border-box;
-    border: solid red;
-
+    border: solid dimgrey 1px;
+    border-radius: 5px;
     max-width: 50%;
     display: flex;
     flex-wrap: wrap;
@@ -86,7 +86,10 @@ h1 {
 .ul1 {
 
     box-sizing: border-box;
-    border: solid;
+    text-align: center;
+    height: fit-content;
+
+
 }
 
 .ul2 {
@@ -109,8 +112,11 @@ h1 {
 
 .infFeed {
     box-sizing: border-box;
-    border: solid;
+    background: lightgrey;
+    color: navy;
+    font-weight:  bold;
     width: 100%;
+    padding: 1.5rem;
 }
 
 .content {
@@ -285,5 +291,8 @@ input:checked + .slider:before {
 
 .toogle{
     display: flex;
+    align-items: center;
     justify-content: space-evenly;
+    max-width: 500px;
+    margin: auto;
 }
