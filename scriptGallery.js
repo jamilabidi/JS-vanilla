@@ -1,20 +1,18 @@
 document.addEventListener("DOMContentLoaded", (event) => {
 
     const imgblocks = document.getElementById("container");
-    const toggleImg =document.getElementById("switch");
-    const form=document.querySelector("form");
-    let mosaicBoolean=document.getElementById("switch").value==="true"? true:false;
-    console.log(mosaicBoolean);
+    const toggleImg = document.getElementById("switch");
+    const form = document.querySelector("form");
+    let mosaicBoolean = document.getElementById("switch").value === "true" ? true : false;
 
     const imgFetch = fetch('https://picsum.photos/v2/list')
         .then(resp => resp.json())
         .then(json => {
             displayImgs(json)
-            console.log(json);
+            // console.log(json);
         })
 
     const displayImgs = (arrayObjects) => {
-        console.log(arrayObjects);
         const imgsNode = arrayObjects.map((img) => {
             return createImgElement(img);
         });
@@ -28,49 +26,64 @@ document.addEventListener("DOMContentLoaded", (event) => {
         div.innerHTML = `
     <div >
     <img src="${img.download_url}" style="max-width: 25rem"/>
-    </div>
-    `
+    </div>`
         return div;
     }
 
     const displayToColumn = () => {
         imgblocks.classList.remove('imgContainer');
         imgblocks.classList.add('imgColumn');
-        mosaicBoolean=false;
+        mosaicBoolean = false;
     }
     const displayToMosaic = () => {
         imgblocks.classList.remove('imgColumn');
         imgblocks.classList.add('imgContainer');
-        mosaicBoolean=true;
+        mosaicBoolean = true;
     }
 
-    toggleImg.onclick=()=>{
-        // event.preventDefault();
-        console.log(typeof mosaicBoolean);
-        if (mosaicBoolean===true){
+    toggleImg.onclick = () => {
+        if (mosaicBoolean === true) {
             displayToColumn();
-            console.log('mos',mosaicBoolean);
-
-        }
-        else{
+        } else {
             displayToMosaic();
-            console.log('col',mosaicBoolean);
         }
-        console.log('booleanSortie=',mosaicBoolean);
     }
 
     // displayToMosaic();
-    form.addEventListener("submit", async event=>{
+    form.addEventListener("submit", async event => {
         event.preventDefault();
-        const formData= new FormData(form);
-        const imgUpload=Object.fromEntries(formData.entries());
-        const json=JSON.stringify(imgUpload);
-        console.log(typeof json);
-        console.log("données envoyées",json);
-        console.log(typeof imgblocks);
-        console.log("imgblocks", imgblocks);
+        const formData = new FormData(form);
+        const imgUpload = Object.fromEntries(formData.entries());
+        const json = JSON.stringify(imgUpload);
 
-        imgblocks.prepend(createImgElement(imgUpload))
+        let imgUploadBlock = createImgElement(imgUpload);
+        console.log(imgUploadBlock);
+        createDeleteButton(imgUploadBlock);
+        console.log(imgUploadBlock);
+        imgblocks.prepend(imgUploadBlock);
+///=======on met en place l'action du bouton delete
+        let buttonDelete = document.getElementById("btn-close");
+        buttonDelete.addEventListener("click", event => {
+            imgblocks.removeChild(event.target.parentNode.parentNode.parentNode);
+        })
+
+
     })
+
+    const createDeleteButton = (div) => {
+        const deleteButton = document.createElement("div")
+        deleteButton.innerHTML = `
+<!--        <button type="button" id="btn-close" className="btn-close">-->
+<!--            <span className="icon-cross"></span>-->
+<!--            <span className="visually-hidden">Delete</span>-->
+<!--        </button>-->
+<button class="noselect btn-close" id="btn-close"><span class="text">Delete</span><span class="icon">X</span></button>
+        <span className="cross-stand-alone"></span>
+        <span className="cross-1px"></span>`
+        div.appendChild(deleteButton);
+        return div;
+    }
+
+
 
 })

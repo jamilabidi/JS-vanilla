@@ -296,3 +296,67 @@ input:checked + .slider:before {
     max-width: 500px;
     margin: auto;
 }
+button {
+    width: 150px;
+    height: 50px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    border: none;
+    border-radius: 5px;
+    box-shadow: 1px 1px 3px rgba(0,0,0,0.15);
+    background: navy;
+}
+
+.btn-close, .btn-close span {
+    transition: 200ms;
+}
+
+.btn-close .text {
+    transform: translateX(35px);
+    color: white;
+    font-weight: bold;
+}
+
+.btn-close .icon {
+    position: absolute;
+    border-left: 1px solid navy
+    transform: translateX(110px);
+    height: 40px;
+    width: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: bolder;
+    color: #cccccc;
+    font-size: larger;
+
+}
+
+.btn-close svg {
+    width: 15px;
+    fill: #eee;
+
+}
+
+.btn-close:hover {
+    background: navy;
+}
+
+.btn-close:hover .text {
+    color: transparent;
+}
+
+.btn-close:hover .icon {
+    width: 150px;
+    border-left: none;
+    transform: translateX(0);
+}
+
+.btn-close:focus {
+    outline: none;
+}
+
+.btn-close:active .icon svg {
+    transform: scale(0.8);
+}
