@@ -73,10 +73,11 @@ document.addEventListener("DOMContentLoaded", (event) => {
     const createDeleteButton = (div) => {
         const deleteButton = document.createElement("div")
         deleteButton.innerHTML = `
-        <button type="button" id="btn-close" className="btn-close">
-            <span className="icon-cross"></span>
-            <span className="visually-hidden">Close</span>
-        </button>
+<!--        <button type="button" id="btn-close" className="btn-close">-->
+<!--            <span className="icon-cross"></span>-->
+<!--            <span className="visually-hidden">Delete</span>-->
+<!--        </button>-->
+<button class="noselect btn-close" id="btn-close"><span class="text">Delete</span><span class="icon">X</span></button>
         <span className="cross-stand-alone"></span>
         <span className="cross-1px"></span>`
         div.appendChild(deleteButton);
