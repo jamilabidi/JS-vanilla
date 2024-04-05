@@ -1,9 +1,9 @@
 document.addEventListener("DOMContentLoaded", (event) => {
 
     const imgblocks = document.getElementById("container");
-    const toggleImg =document.getElementById("switch");
-    const form=document.querySelector("form");
-    let mosaicBoolean=document.getElementById("switch").value==="true"? true:false;
+    const toggleImg = document.getElementById("switch");
+    const form = document.querySelector("form");
+    let mosaicBoolean = document.getElementById("switch").value === "true" ? true : false;
 
     const imgFetch = fetch('https://picsum.photos/v2/list')
         .then(resp => resp.json())
@@ -33,41 +33,47 @@ document.addEventListener("DOMContentLoaded", (event) => {
     const displayToColumn = () => {
         imgblocks.classList.remove('imgContainer');
         imgblocks.classList.add('imgColumn');
-        mosaicBoolean=false;
+        mosaicBoolean = false;
     }
     const displayToMosaic = () => {
         imgblocks.classList.remove('imgColumn');
         imgblocks.classList.add('imgContainer');
-        mosaicBoolean=true;
+        mosaicBoolean = true;
     }
 
-    toggleImg.onclick=()=>{
-        if (mosaicBoolean===true){
+    toggleImg.onclick = () => {
+        if (mosaicBoolean === true) {
             displayToColumn();
-        }
-        else{
+        } else {
             displayToMosaic();
         }
     }
 
     // displayToMosaic();
-    form.addEventListener("submit", async event=>{
+    form.addEventListener("submit", async event => {
         event.preventDefault();
-        const formData= new FormData(form);
-        const imgUpload=Object.fromEntries(formData.entries());
-        const json=JSON.stringify(imgUpload);
+        const formData = new FormData(form);
+        const imgUpload = Object.fromEntries(formData.entries());
+        const json = JSON.stringify(imgUpload);
 
-        let imgUploadBlock=createImgElement(imgUpload);
+        let imgUploadBlock = createImgElement(imgUpload);
         console.log(imgUploadBlock);
         createDeleteButton(imgUploadBlock);
         console.log(imgUploadBlock);
         imgblocks.prepend(imgUploadBlock);
+///=======on met en place l'action du bouton delete
+        let buttonDelete = document.getElementById("btn-close");
+        buttonDelete.addEventListener("click", event => {
+            imgblocks.removeChild(event.target.parentNode.parentNode.parentNode);
+        })
+
+
     })
 
-    const createDeleteButton=(div)=> {
-        const deleteButton=document.createElement("div")
+    const createDeleteButton = (div) => {
+        const deleteButton = document.createElement("div")
         deleteButton.innerHTML = `
-        <button type="button" className="btn-close">
+        <button type="button" id="btn-close" className="btn-close">
             <span className="icon-cross"></span>
             <span className="visually-hidden">Close</span>
         </button>
@@ -76,4 +82,7 @@ document.addEventListener("DOMContentLoaded", (event) => {
         div.appendChild(deleteButton);
         return div;
     }
+
+
+
 })
