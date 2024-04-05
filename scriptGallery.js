@@ -2,6 +2,7 @@ document.addEventListener("DOMContentLoaded", (event) => {
 
     const imgblocks = document.getElementById("container");
     const toggleImg =document.getElementById("switch");
+    const form=document.querySelector("form");
     let mosaicBoolean=document.getElementById("switch").value==="true"? true:false;
     console.log(mosaicBoolean);
 
@@ -9,7 +10,7 @@ document.addEventListener("DOMContentLoaded", (event) => {
         .then(resp => resp.json())
         .then(json => {
             displayImgs(json)
-            // console.log(json);
+            console.log(json);
         })
 
     const displayImgs = (arrayObjects) => {
@@ -59,5 +60,17 @@ document.addEventListener("DOMContentLoaded", (event) => {
     }
 
     // displayToMosaic();
+    form.addEventListener("submit", async event=>{
+        event.preventDefault();
+        const formData= new FormData(form);
+        const imgUpload=Object.fromEntries(formData.entries());
+        const json=JSON.stringify(imgUpload);
+        console.log(typeof json);
+        console.log("données envoyées",json);
+        console.log(typeof imgblocks);
+        console.log("imgblocks", imgblocks);
+
+        imgblocks.prepend(createImgElement(imgUpload))
+    })
 
 })
