@@ -4,17 +4,15 @@ document.addEventListener("DOMContentLoaded", (event) => {
     const toggleImg =document.getElementById("switch");
     const form=document.querySelector("form");
     let mosaicBoolean=document.getElementById("switch").value==="true"? true:false;
-    console.log(mosaicBoolean);
 
     const imgFetch = fetch('https://picsum.photos/v2/list')
         .then(resp => resp.json())
         .then(json => {
             displayImgs(json)
-            console.log(json);
+            // console.log(json);
         })
 
     const displayImgs = (arrayObjects) => {
-        console.log(arrayObjects);
         const imgsNode = arrayObjects.map((img) => {
             return createImgElement(img);
         });
@@ -28,8 +26,7 @@ document.addEventListener("DOMContentLoaded", (event) => {
         div.innerHTML = `
     <div >
     <img src="${img.download_url}" style="max-width: 25rem"/>
-    </div>
-    `
+    </div>`
         return div;
     }
 
@@ -45,18 +42,12 @@ document.addEventListener("DOMContentLoaded", (event) => {
     }
 
     toggleImg.onclick=()=>{
-        // event.preventDefault();
-        console.log(typeof mosaicBoolean);
         if (mosaicBoolean===true){
             displayToColumn();
-            console.log('mos',mosaicBoolean);
-
         }
         else{
             displayToMosaic();
-            console.log('col',mosaicBoolean);
         }
-        console.log('booleanSortie=',mosaicBoolean);
     }
 
     // displayToMosaic();
@@ -65,12 +56,24 @@ document.addEventListener("DOMContentLoaded", (event) => {
         const formData= new FormData(form);
         const imgUpload=Object.fromEntries(formData.entries());
         const json=JSON.stringify(imgUpload);
-        console.log(typeof json);
-        console.log("données envoyées",json);
-        console.log(typeof imgblocks);
-        console.log("imgblocks", imgblocks);
 
-        imgblocks.prepend(createImgElement(imgUpload))
+        let imgUploadBlock=createImgElement(imgUpload);
+        console.log(imgUploadBlock);
+        createDeleteButton(imgUploadBlock);
+        console.log(imgUploadBlock);
+        imgblocks.prepend(imgUploadBlock);
     })
 
+    const createDeleteButton=(div)=> {
+        const deleteButton=document.createElement("div")
+        deleteButton.innerHTML = `
+        <button type="button" className="btn-close">
+            <span className="icon-cross"></span>
+            <span className="visually-hidden">Close</span>
+        </button>
+        <span className="cross-stand-alone"></span>
+        <span className="cross-1px"></span>`
+        div.appendChild(deleteButton);
+        return div;
+    }
 })
