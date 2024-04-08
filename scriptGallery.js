@@ -1,4 +1,4 @@
-document.addEventListener("DOMContentLoaded", (event) => {
+document.addEventListener("DOMContentLoaded", async (event) => {
 
     const imgblocks = document.getElementById("container");
     const toggleImg = document.getElementById("switch");
@@ -84,6 +84,73 @@ document.addEventListener("DOMContentLoaded", (event) => {
         return div;
     }
 
+    const url = "https://api.nasa.gov/planetary/apod?api_key=PNzkVvhqAOv7czlOtmivyyGIDyY6r9EdVJecGBWt&count=5"
 
+    let data;
+    const carouselItems = document.querySelectorAll('.carousel-item');
+    const carouselContainer=document.getElementById('carousel');
+    let currentIndex = 0;
+
+    const callApi = async (url) => {
+        return await fetch(url)
+    }
+
+    await callApi(url)
+        .then(resp => resp.json())
+        .then(resp2 => data = resp2)
+
+
+    const createImgCarouselElement = (img) => {
+        const div = document.createElement("div");
+        div.classList.add('carousel-container');
+        div.style.display = 'none'
+        div.innerHTML = `
+    <div class="carousel-item">
+    <img src="${img.url}" "/>
+    </div>`
+        console.log('div',div);
+        return div;
+    }
+
+    function buildSlide(index,carouselItems) {
+        const imgsNodeCarousel = carouselItems.map((img) => {
+            return createImgCarouselElement(img);
+        });
+        carouselContainer.append(...imgsNodeCarousel);
+        // Show the slide at the specified index
+         imgsNodeCarousel[index].style.display = 'block';
+         return imgsNodeCarousel;
+    }
+
+    function showSlide(index,imgsNodeCarousel) {
+        // Hide all carousel items
+        imgsNodeCarousel.forEach(item => {
+            item.style.display = 'none';
+        });
+        // Show the slide at the specified index
+        imgsNodeCarousel[index].style.display = 'block';
+    }
+
+    function nextSlide() {
+        currentIndex = (currentIndex + 1) % imgsNodeCarousel.length;
+        showSlide(currentIndex,imgsNodeCarousel);
+    }
+
+    function previousSlide() {
+        currentIndex = (currentIndex - 1 + imgsNodeCarousel.length) % imgsNodeCarousel.length;
+        showSlide(currentIndex,imgsNodeCarousel);
+    }
+
+// Show the first slide initially
+
+
+// Set up event listeners for next and previous buttons
+    document.getElementById('nextBtn').addEventListener('click', nextSlide);
+    document.getElementById('prevBtn').addEventListener('click', previousSlide);
+
+    const imgsNodeCarousel=buildSlide(currentIndex,data);
+    showSlide(currentIndex,imgsNodeCarousel);
 
 })
+
+
